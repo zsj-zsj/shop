@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Model\ShopModel;
 class UserController extends Controller
 {
-<<<<<<< HEAD
     //登陆的视图
 	    function login(){
 	    	return view('admin.user.login');
@@ -26,7 +25,8 @@ class UserController extends Controller
     			$result=password_verify($pass,$res['pass']);
     			//echo $result;die;
     			if($result){
-    				echo "<script>alert('登陆成功');location.href='/admin/mycenter';</script>";
+					session(['user'=>$res['name']]);
+    				echo "<script>alert('登陆成功');location.href='/user/mycenter';</script>";
     			}else{
     				echo "<script>alert('登录失败');location.href='/admin/login';</script>";
     			}
@@ -41,7 +41,6 @@ class UserController extends Controller
       function mycenter(){
       	return view('admin.user.mycenter');
       }
-=======
     public function register(){
         return view('admin.user.register');
     }
@@ -54,8 +53,7 @@ class UserController extends Controller
         unset($post['passs']);
         $res=ShopModel::create($post);
         if($res){
-            echo "<script>alert('添加成功');location.href='/register';</script>";
+            echo "<script>alert('添加成功');location.href='/admin/login';</script>";
         }
     }
->>>>>>> 36bb2d591ab6da45b70b007e6037738d51068ede
 }

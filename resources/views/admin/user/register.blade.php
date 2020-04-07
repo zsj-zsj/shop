@@ -33,6 +33,7 @@
 				<td></td>
 			</tr>
         </table>
+        <a href="{{url('/admin/login')}}">登录</a>
     </form>
         <script>
             function validate() {

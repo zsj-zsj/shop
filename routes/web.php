@@ -16,18 +16,21 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-<<<<<<< HEAD
 
 //登录注册
 Route::prefix('admin')->group(function () {
 	Route::any('login','Admin\UserController@login');
 	Route::post('login_do','Admin\UserController@login_do');
+	
+});
+
+Route::prefix('user')->middleware('User')->group(function () {
 	Route::get('mycenter','Admin\UserController@mycenter');
 });
-=======
+
+
 Route::prefix('register')->group(function(){
     Route::get('/','Admin\UserController@register');
     Route::post('/store','Admin\UserController@store');
 });
 
->>>>>>> 36bb2d591ab6da45b70b007e6037738d51068ede
