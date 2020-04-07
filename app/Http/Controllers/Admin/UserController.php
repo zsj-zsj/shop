@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Model\ShopModel;
 class UserController extends Controller
 {
+<<<<<<< HEAD
     //登陆的视图
 	    function login(){
 	    	return view('admin.user.login');
@@ -40,4 +41,21 @@ class UserController extends Controller
       function mycenter(){
       	return view('admin.user.mycenter');
       }
+=======
+    public function register(){
+        return view('admin.user.register');
+    }
+    public function store(Request $request){
+        $post=$request->except('_token');
+        if($post['pass'] !=$post['passs']){
+            echo "<script>alert('密码不一致');location.href='/register';</script>";
+        }
+        $post['pass']=password_hash($post['pass'],PASSWORD_BCRYPT);
+        unset($post['passs']);
+        $res=ShopModel::create($post);
+        if($res){
+            echo "<script>alert('添加成功');location.href='/register';</script>";
+        }
+    }
+>>>>>>> 36bb2d591ab6da45b70b007e6037738d51068ede
 }
