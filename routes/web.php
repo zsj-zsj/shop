@@ -16,3 +16,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+//登录注册
+Route::prefix('admin')->group(function () {
+	Route::any('login','Admin\UserController@login');
+	Route::post('login_do','Admin\UserController@login_do');
+	Route::get('mycenter','Admin\UserController@mycenter');
+});
