@@ -7,13 +7,11 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="">
-        <tr>
-            <input type="text" name="pass">新密码
-        </tr>
-        <tr>
-            <input type="text" name="passs">确认密码
-        </tr>            
+    <form action="{{url('pass/newpass')}}" method="post">
+        @csrf
+        <input type="password" name="pass">新密码 <br>
+        <input type="password" name="pass2">确认新密码 <br>
+        <input type="submit" value="修改">
     </form>
 </body>
 </html>
