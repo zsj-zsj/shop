@@ -17,6 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 //登录注册
 Route::prefix('admin')->group(function () {
 	Route::any('login','Admin\UserController@login');
@@ -27,6 +28,7 @@ Route::prefix('admin')->group(function () {
 Route::prefix('user')->middleware('User')->group(function () {
 	Route::get('mycenter','Admin\UserController@mycenter');
 });
+
 
 
 Route::prefix('register')->group(function(){

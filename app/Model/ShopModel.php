@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ShopModel extends Model
 {
+
     //用户表
      /**
 	 * 关联到模型的数据表
@@ -21,4 +22,5 @@ class ShopModel extends Model
 	 * @var array
 	 */
 	 protected $guarded = [];
+
 }
