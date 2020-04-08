@@ -29,6 +29,11 @@ Route::prefix('user')->middleware('User')->group(function () {
 	Route::get('mycenter','Admin\UserController@mycenter');
 });
 
+Route::prefix('pass')->group(function () {
+    Route::get('/','Admin\FindPass@findpass');  //展示找回页面
+    Route::post('/doFindpass','Admin\FindPass@doFindpass'); //执行发邮件
+});
+
 
 
 Route::prefix('register')->group(function(){
