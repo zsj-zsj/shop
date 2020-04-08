@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Model\ShopModel;
 class UserController extends Controller
 {
+
     //登陆的视图
 	public function login()
 	{
@@ -64,4 +65,5 @@ class UserController extends Controller
             echo "<script>alert('添加成功');location.href='/admin/login';</script>";
         }
     }
+
 }
