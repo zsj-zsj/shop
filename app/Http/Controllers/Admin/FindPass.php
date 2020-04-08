@@ -70,12 +70,6 @@ class FindPass extends Controller
             echo "token不对";die;
         }
 
-        if($token['status'] = 0){
-            echo "token无效";die;
-        }
-
-        $status=ps::where('token','=',$gettoken)->update(['status'=>1]);
-
         session(['id'=>$token['id']]);
         return view('admin.pass.newpass');
     }
@@ -93,10 +87,17 @@ class FindPass extends Controller
         $id=session('id');
         unset($post['pass2']);
         $res=ShopModel::where('id','=',$id)->update(['pass'=>$pass1]);
+        
+        $a=ps::where('id','=',$id)->orderBy('p_id','desc')->first();
+        if($a->status==1){
+            echo "token无效";die;
+        }
+
         if($res){
             echo "修改成功！正在跳转至登录页面__________";
+            $status=ps::where('id','=',$id)->update(['status'=>1]);
             header('refresh:2;url=/admin/login');
-        }
+        }  
     }
 
 }
