@@ -99,5 +99,4 @@ class FindPass extends Controller
             header('refresh:2;url=/admin/login');
         }  
     }
-
 }
