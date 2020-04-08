@@ -22,8 +22,14 @@ Route::get('/', function () {
 Route::prefix('admin')->group(function () {
 	Route::any('login','Admin\UserController@login');
 	Route::post('login_do','Admin\UserController@login_do');
+	
+});
+
+Route::prefix('user')->middleware('User')->group(function () {
 	Route::get('mycenter','Admin\UserController@mycenter');
 });
+
+
 
 Route::prefix('register')->group(function(){
     Route::get('/','Admin\UserController@register');
