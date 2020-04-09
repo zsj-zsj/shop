@@ -76,7 +76,21 @@ class UserController extends Controller
         unset($post['passs']);
         $res=ShopModel::create($post);
         if($res){
-            echo "<script>alert('添加成功');location.href='/login';</script>";
+			$data=[
+				'url'=>"注册成功"            
+			];
+			Mail::send('user.regemail',$data,function($message){
+				$post=request()->except('_token');
+				$user=ShopModel::where('name','=',$post)
+								->orwhere('email','=',$post)
+								->orwhere('mibble','=',$post)
+								->first();
+					$to = [
+						$user['email']
+					];
+					$message ->to($to)->subject('注册成功');
+				});
+				echo "<script>alert('恭喜用户注册成功,附加邮件请接收');location.href='/login';</script>";
         }
     }
 
