@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -14,7 +14,7 @@ class FindPass extends Controller
     //展示找回密码
     public function findpass()
     {
-        return view('admin.pass.findpass');
+        return view('pass.findpass');
     }
 
     //发送邮件
@@ -41,7 +41,7 @@ class FindPass extends Controller
             $data=[
                 'url'=>env('APP_URL').'pass/newpass?token='.$token
             ];
-            Mail::send('admin.pass.email',$data,function($message){
+            Mail::send('pass.email',$data,function($message){
                 $post=request()->except('_token');
                 $user=ShopModel::where('name','=',$post)
                             ->orwhere('email','=',$post)
@@ -77,7 +77,7 @@ class FindPass extends Controller
         $status=ps::where('token','=',$gettoken)->update(['status'=>1]);
 
         session(['id'=>$token['id']]);
-        return view('admin.pass.newpass');
+        return view('pass.newpass');
     }
 
     //执行重置密码
@@ -95,7 +95,7 @@ class FindPass extends Controller
         $res=ShopModel::where('id','=',$id)->update(['pass'=>$pass1]);
         if($res){
             echo "修改成功！正在跳转至登录页面__________";
-            header('refresh:2;url=/admin/login');
+            header('refresh:2;url=/login');
         }
     }
 
