@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\ShopModel;
+use Illuminate\Support\Facades\Mail;
 class UserController extends Controller
 {
 
@@ -28,8 +29,21 @@ class UserController extends Controller
     		$result=password_verify($pass,$res['pass']);
     		//echo $result;die;
 			if($result){
+
+                $data=[
+                    'status'=>'登陆成功'
+                ];
+                Mail::send('admin.user.loginsuccess',$data,function($message){
+                $account=request()->account;
+                $user=ShopModel::where(['name'=>$account])->orWhere(['mibble'=>$account])->orWhere(['email'=>$account])->first();
+                $to = [
+                    $user['email']
+                ];
+                $message ->to($to)->subject('登陆成功');
+            });
 				session(['user'=>$res['name']]);
     			echo "<script>alert('登陆成功');location.href='/user/mycenter';</script>";
+               
     		}else{
     			echo "<script>alert('登录失败');location.href='/admin/login';</script>";
 			}
