@@ -70,8 +70,14 @@ class UserController extends Controller
 	{
         $post=$request->except('_token');
         if($post['pass'] !=$post['passs']){
-            echo "<script>alert('密码不一致');location.href='/register';</script>";
-        }
+            echo "<script>alert('密码不一致');location.href='/reg';</script>";
+		}
+
+		$qqmail=$post['email'];
+		if(!preg_match('|^[1-9]\d{4,10}@qq\.com$|i',$qqmail)){
+			echo "<script>alert('邮箱格式不对');location.href='/reg';</script>";
+		}
+
         $post['pass']=password_hash($post['pass'],PASSWORD_BCRYPT);
         unset($post['passs']);
         $res=ShopModel::create($post);
