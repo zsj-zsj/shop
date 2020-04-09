@@ -26,6 +26,10 @@ Route::post('/login_do','UserController@login_do');
 Route::get('/reg','UserController@register');
 Route::post('/doreg','UserController@store');
 
+//修改密码
+Route::get('/changepass','UserController@changePass')->middleware('User');
+Route::post('/changepass','UserController@dochangePass');
+
 //个人中心
 Route::prefix('user')->middleware('User')->group(function () {
 	Route::get('mycenter','UserController@mycenter');

@@ -16,7 +16,7 @@ class User
     public function handle($request, Closure $next)
     {
         if(!session('user')){
-            echo "<script>alert('请登录');location.href='/admin/login';</script>";
+            echo "<script>alert('请登录');location.href='/login';</script>";
         }
         return $next($request);
     }

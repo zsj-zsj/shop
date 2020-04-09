@@ -12,7 +12,7 @@
 	    密码:<input type="password" name="pass">
 	    <input type="submit" value="登录">
 	</form>
-	<a href="{{url('pass')}}">忘记密码</a><br>
+	<a href="{{url('pass')}}">忘记密码</a>&nbsp;&nbsp;<a href="{{url('changepass')}}">修改密码</a><br>
 	<a href="{{url('reg')}}">注册</a>
 </body>
 </html>

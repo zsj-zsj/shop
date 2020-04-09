@@ -78,6 +78,37 @@ class UserController extends Controller
         if($res){
             echo "<script>alert('添加成功');location.href='/login';</script>";
         }
-    }
+	}
+	
+	//修改密码
+	public function changePass()
+	{
+		return view('user.changepass');
+	}
+
+	//执行修改密码
+	public function dochangePass(Request $request)
+	{
+		$post=$request->except('_token');
+		$user=session('user');
+		$res=ShopModel::where('name','=',$user)->first()->toArray();
+		$result=password_verify($post['pass'],$res['pass']);
+		// echo $request;
+		if($result != $res['pass']){
+			echo "旧密码不正确";die;
+		}
+
+		if($post['newpass'] != $post['newpass2'] ){
+			echo "新密码不一致";die;
+		}
+
+		$post['newpass']=password_hash($post['newpass'],PASSWORD_BCRYPT);
+		$pass=ShopModel::where('name','=',$user)->update(['pass'=>$post['newpass']]);
+		if($pass){
+			echo "修改成功,请重新登录";
+			header('refresh:2;url=/login');
+		}
+
+	}
 
 }
