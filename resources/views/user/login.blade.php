@@ -1,22 +1,3 @@
-<!-- <!DOCTYPE html>
-<html>
-<meta charset="utf-8">
-<head>
-	<title>登陆</title>
-</head>
-<body>
-
-	<form action="{{url('/login_do')}}" method="post">
-		@csrf
-		账号:<input type="text" name="account" placeholder="用户名/邮箱/电话"><br>
-	    密码:<input type="password" name="pass">
-	    <input type="submit" value="登录">
-	</form>
-	<a href="{{url('pass')}}">忘记密码</a>&nbsp;&nbsp;<a href="{{url('changepass')}}">修改密码</a><br>
-	<a href="{{url('reg')}}">注册</a>
-</body>
-</html> -->
-
 <!DOCTYPE html>
 <html>	
 <head>
@@ -24,12 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <meta name="keywords" content="Flat Dark Web Login Form Responsive Templates, Iphone Widget Template, Smartphone login forms,Login form, Widget Template, Responsive Templates, a Ipad 404 Templates, Flat Responsive Templates" />
-<link href="css/style.css" rel='stylesheet' type='text/css' />
-<!--webfonts-->
-<link href='http://fonts.useso.com/css?family=PT+Sans:400,700,400italic,700italic|Oswald:400,300,700' rel='stylesheet' type='text/css'>
-<link href='http://fonts.useso.com/css?family=Exo+2' rel='stylesheet' type='text/css'>
-<!--//webfonts-->
-<script src="http://ajax.useso.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<link href="/css/style.css" rel='stylesheet' type='text/css' />
 </head>
 <body>
 <script>$(document).ready(function(c) {
