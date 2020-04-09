@@ -63,7 +63,8 @@
 	<div class="signin">
 		<input type="submit" value="Login" >
 		<br><br>
-		<a href="{{url('pass')}}"><h2>忘记密码</h2></a><br>
+		<a href="{{url('pass')}}">忘记密码</a>&nbsp;&nbsp;<a href="{{url('changepass')}}">修改密码</a><br>
+	<a href="{{url('reg')}}">注册</a>
 	</div>
 	</form>
 </div>
