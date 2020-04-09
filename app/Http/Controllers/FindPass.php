@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -14,7 +14,7 @@ class FindPass extends Controller
     //展示找回密码
     public function findpass()
     {
-        return view('admin.pass.findpass');
+        return view('pass.findpass');
     }
 
     //发送邮件
@@ -39,9 +39,9 @@ class FindPass extends Controller
             ps::insertGetId($data);            
 
             $data=[
-                'url'=>env('APP_URL').'pass/newpass?token='.$token
+                'url'=>env('APP_URL').'/newpass?token='.$token
             ];
-            Mail::send('admin.pass.email',$data,function($message){
+            Mail::send('pass.email',$data,function($message){
                 $post=request()->except('_token');
                 $user=ShopModel::where('name','=',$post)
                             ->orwhere('email','=',$post)
@@ -53,6 +53,7 @@ class FindPass extends Controller
                 $message ->to($to)->subject('密码重置');
             });
             echo "邮件已发送至邮箱：".$user['email'];
+            header('refresh:2;url=/login');
         }
     }
 
@@ -71,7 +72,7 @@ class FindPass extends Controller
         }
 
         session(['id'=>$token['id']]);
-        return view('admin.pass.newpass');
+        return view('pass.newpass');
     }
 
     //执行重置密码
@@ -92,11 +93,14 @@ class FindPass extends Controller
         if($a->status==1){
             echo "token无效";die;
         }
+        if($a->expire < time() ){
+            die("token过期");
+        }
 
         if($res){
             echo "修改成功！正在跳转至登录页面__________";
             $status=ps::where('id','=',$id)->update(['status'=>1]);
-            header('refresh:2;url=/admin/login');
+            header('refresh:2;url=/login');
         }  
     }
 }

@@ -18,28 +18,21 @@ Route::get('/', function () {
 });
 
 
-//登录注册
-Route::prefix('admin')->group(function () {
-	Route::any('login','Admin\UserController@login');
-	Route::post('login_do','Admin\UserController@login_do');
-	
-});
+//登录
+Route::get('/login','UserController@login');
+Route::post('/login_do','UserController@login_do');
 
+//注册
+Route::get('/reg','UserController@register');
+Route::post('/doreg','UserController@store');
+
+//个人中心
 Route::prefix('user')->middleware('User')->group(function () {
-	Route::get('mycenter','Admin\UserController@mycenter');
+	Route::get('mycenter','UserController@mycenter');
 });
 
-Route::prefix('pass')->group(function () {
-    Route::get('/','Admin\FindPass@findpass');  //展示找回页面
-    Route::post('/doFindpass','Admin\FindPass@doFindpass'); //执行发邮件
-    Route::get('/newpass','Admin\FindPass@resPass');  //展示重置密码页面
-    Route::post('/newpass','Admin\FindPass@doResPass');  //执行重置密码
-});
-
-
-
-Route::prefix('register')->group(function(){
-    Route::get('/','Admin\UserController@register');
-    Route::post('/store','Admin\UserController@store');
-});
+Route::get('pass','FindPass@findpass');  //展示找回页面
+Route::post('/doFindpass','FindPass@doFindpass'); //执行发邮件
+Route::get('/newpass','FindPass@resPass');  //展示重置密码页面
+Route::post('/newpass','FindPass@doResPass');  //执行重置密码
 

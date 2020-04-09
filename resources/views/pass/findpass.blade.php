@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>找回密码</h1>
-    <form action="{{url('pass/doFindpass')}}" method="post">
+    <form action="{{url('/doFindpass')}}" method="post">
         @csrf
         <input type="text" name="name" placeholder="请输入用户名/手机号/邮箱">
         <input type="submit" value="找回密码">

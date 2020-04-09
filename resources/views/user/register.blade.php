@@ -5,7 +5,7 @@
     <title>注册表单</title>
 </head>
 <body>
-    <form action="{{url('/register/store')}}" method="post">
+    <form action="{{url('/doreg')}}" method="post">
     @csrf
         <table>
             <tr>

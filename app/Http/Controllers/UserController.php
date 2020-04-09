@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -12,7 +12,7 @@ class UserController extends Controller
     //登陆的视图
 	public function login()
 	{
-	    return view('admin.user.login');
+	    return view('user.login');
 	}
 
 
@@ -33,22 +33,22 @@ class UserController extends Controller
                 $data=[
                     'status'=>'登陆成功'
                 ];
-                Mail::send('admin.user.loginsuccess',$data,function($message){
-                $account=request()->account;
-                $user=ShopModel::where(['name'=>$account])->orWhere(['mibble'=>$account])->orWhere(['email'=>$account])->first();
-                $to = [
-                    $user['email']
-                ];
-                $message ->to($to)->subject('登陆成功');
-            });
+                Mail::send('user.loginsuccess',$data,function($message){
+					$account=request()->account;
+					$user=ShopModel::where(['name'=>$account])->orWhere(['mibble'=>$account])->orWhere(['email'=>$account])->first();
+					$to = [
+						$user['email']
+					];
+					$message ->to($to)->subject('登陆成功');
+            	});
 				session(['user'=>$res['name']]);
     			echo "<script>alert('登陆成功');location.href='/user/mycenter';</script>";
                
     		}else{
-    			echo "<script>alert('登录失败');location.href='/admin/login';</script>";
+    			echo "<script>alert('登录失败');location.href='/login';</script>";
 			}
 		}else{
-    		echo "<script>alert('账号不存在');location.href='/admin/login';</script>";
+    		echo "<script>alert('账号不存在');location.href='/login';</script>";
     	}	
     }
 
@@ -56,13 +56,13 @@ class UserController extends Controller
 	//个人中心
 	public function mycenter()
 	{
-      	return view('admin.user.mycenter');
+      	return view('user.mycenter');
 	}
 	
 	//注册视图
 	public function register()
 	{
-        return view('admin.user.register');
+        return view('user.register');
 	}
 	
 	//执行注册
@@ -76,7 +76,7 @@ class UserController extends Controller
         unset($post['passs']);
         $res=ShopModel::create($post);
         if($res){
-            echo "<script>alert('添加成功');location.href='/admin/login';</script>";
+            echo "<script>alert('添加成功');location.href='/login';</script>";
         }
     }
 

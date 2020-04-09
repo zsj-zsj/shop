@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="{{url('pass/newpass')}}" method="post">
+    <form action="{{url('/newpass')}}" method="post">
         @csrf
         <input type="password" name="pass">新密码 <br>
         <input type="password" name="pass2">确认新密码 <br>
