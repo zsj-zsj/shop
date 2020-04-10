@@ -69,6 +69,10 @@ class UserController extends Controller
 	public function store(Request $request)
 	{
         $post=$request->except('_token');
+        $qqmail=$post['email'];
+		if(!preg_match('|^[1-9]\d{4,10}@qq\.com$|i',$qqmail)){
+		echo $qqmail,' 请输入正确的邮箱格式';die;
+		}
         if($post['pass'] !=$post['passs']){
             echo "<script>alert('密码不一致');location.href='/register';</script>";
         }
