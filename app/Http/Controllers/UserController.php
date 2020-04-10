@@ -21,20 +21,21 @@ class UserController extends Controller
 	{
     	$account=request()->account;
     	$pass=request()->pass;	
-		//$pass=password_hash("123456",PASSWORD_DEFAULT);
+		//$pass=password_hash("123456",PASSWORD_DEFAULT);   哈希加密的方法
 		$res=ShopModel::where(['name'=>$account])->orWhere(['mibble'=>$account])->orWhere(['email'=>$account])->first();
-    	//print_r($res);
-    	//echo $res['pass'];die;
     	if($res){
     		$result=password_verify($pass,$res['pass']);
-    		//echo $result;die;
+    		
 			if($result){
 
                 $data=[
-                    'status'=>'登陆成功'
+                	'user_name'=>$res['name'],
+                    'time'=>date('Y-m-d h:i:s',time()),
+                    'ip'=>$_SERVER['REMOTE_ADDR'],
+                    'url'=>env('APP_URL')
                 ];
-                Mail::send('user.loginsuccess',$data,function($message) use ($account){
-					//$account=request()->account;
+                //使用闭包函数，传递参数
+                Mail::send('user.loginsuccess',$data,function($message) use ($account){ 	
 					$user=ShopModel::where(['name'=>$account])->orWhere(['mibble'=>$account])->orWhere(['email'=>$account])->first();
 					$to = [
 						$user['email']
@@ -45,7 +46,7 @@ class UserController extends Controller
     			echo "<script>alert('登陆成功');location.href='/user/mycenter';</script>";
                
     		}else{
-    			echo "<script>alert('登录失败');location.href='/login';</script>";
+    			echo "<script>alert('账号或密码错误');location.href='/login';</script>";
 			}
 		}else{
     		echo "<script>alert('账号不存在');location.href='/login';</script>";
@@ -108,6 +109,8 @@ class UserController extends Controller
 		$post=$request->except('_token');
 		$user=session('user');
 		$res=ShopModel::where('name','=',$user)->first()->toArray();
+
+       
 		$result=password_verify($post['pass'],$res['pass']);
 		// echo $request;
 		if($result != $res['pass']){
@@ -117,7 +120,7 @@ class UserController extends Controller
 		if($post['newpass'] != $post['newpass2'] ){
 			echo "新密码不一致";die;
 		}
-
+		
 		$post['newpass']=password_hash($post['newpass'],PASSWORD_BCRYPT);
 		$pass=ShopModel::where('name','=',$user)->update(['pass'=>$post['newpass']]);
 		if($pass){
