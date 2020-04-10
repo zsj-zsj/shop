@@ -125,6 +125,17 @@ class UserController extends Controller
 		$pass=ShopModel::where('name','=',$user)->update(['pass'=>$post['newpass']]);
 		if($pass){
 			echo "修改成功,请重新登录";
+			$data=[
+				'user_name' => $res['name'],
+				'time'=>date('Y-m-d H:i:s'),
+				'ip'=>$_SERVER['REMOTE_ADDR'],
+			];
+			Mail::send('pass.passemail',$data,function($message) use($res){
+					$to = [
+                        $res['email']
+					];
+					$message ->to($to)->subject('修改密码成功');
+			});
 			header('refresh:2;url=/login');
 		}
 
