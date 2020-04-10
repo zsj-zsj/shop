@@ -33,9 +33,9 @@ class UserController extends Controller
                 $data=[
                     'status'=>'登陆成功'
                 ];
-                Mail::send('user.loginsuccess',$data,function($message){
-					$account=request()->account;
-					//$user=ShopModel::where(['name'=>$account])->orWhere(['mibble'=>$account])->orWhere(['email'=>$account])->first();
+                Mail::send('user.loginsuccess',$data,function($message) use ($account){
+					//$account=request()->account;
+					$user=ShopModel::where(['name'=>$account])->orWhere(['mibble'=>$account])->orWhere(['email'=>$account])->first();
 					$to = [
 						$user['email']
 					];
