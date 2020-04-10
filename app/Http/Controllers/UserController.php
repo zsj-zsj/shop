@@ -35,7 +35,7 @@ class UserController extends Controller
                 ];
                 Mail::send('user.loginsuccess',$data,function($message){
 					$account=request()->account;
-					$user=ShopModel::where(['name'=>$account])->orWhere(['mibble'=>$account])->orWhere(['email'=>$account])->first();
+					//$user=ShopModel::where(['name'=>$account])->orWhere(['mibble'=>$account])->orWhere(['email'=>$account])->first();
 					$to = [
 						$user['email']
 					];
@@ -85,14 +85,14 @@ class UserController extends Controller
 			$data=[
 				'url'=>"注册成功"            
 			];
-			Mail::send('user.regemail',$data,function($message){
+			Mail::send('user.regemail',$data,function($message,$post){
 				$post=request()->except('_token');
 				$user=ShopModel::where('name','=',$post)
 								->orwhere('email','=',$post)
 								->orwhere('mibble','=',$post)
 								->first();
 					$to = [
-						$user['email']
+                        $post['email']
 					];
 					$message ->to($to)->subject('注册成功');
 				});
