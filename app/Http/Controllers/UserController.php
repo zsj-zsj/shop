@@ -141,4 +141,13 @@ class UserController extends Controller
 
 	}
 
+	//退出登录
+	function loginexit(){
+		request()->session()->flush();  //清除session
+		if(!session('user')){
+            echo "<script>alert('退出成功');location.href='/login';</script>";
+        }
+	}
+
+
 }

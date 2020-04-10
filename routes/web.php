@@ -37,6 +37,7 @@ Route::post('/changepass','UserController@dochangePass');
 //个人中心
 Route::prefix('user')->middleware('User')->group(function () {
 	Route::get('mycenter','UserController@mycenter');
+	Route::get('loginexit','UserController@loginexit');
 });
 
 Route::get('pass','FindPass@findpass');  //展示找回页面
