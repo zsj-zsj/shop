@@ -86,7 +86,7 @@ class UserController extends Controller
 			    'user_name' => $post['name'],
 				'url' => "注册成功"
 			];
-			Mail::send('user.regemail',$data,function($message,$post){
+			Mail::send('user.regemail',$data,function($message) use($post){
 					$to = [
                         $post['email']
 					];
