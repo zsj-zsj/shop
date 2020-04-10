@@ -17,6 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/info',function(){
+    phpinfo();
+});
+
 
 //登录
 Route::get('/login','UserController@login');
