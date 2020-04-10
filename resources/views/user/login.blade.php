@@ -17,7 +17,7 @@
 });
 </script>
  <!--SIGN UP-->
- <h1>klasikal Login Form</h1>
+ <h1>欢迎登录</h1>
 <div class="login-form">
 	<div class="close"> </div>
 		<div class="head-info">
@@ -25,24 +25,24 @@
 			<label class="lbl-2"> </label>
 			<label class="lbl-3"> </label>
 		</div>
-			<div class="clear"> </div>
+	<div class="clear"> </div>
 	<div class="avtar">
 		<img src="images/avtar.png" />
 	</div>
-			<form action="{{url('/login_do')}}" method="post">
+		<form action="{{url('/login_do')}}" method="post">
 				@csrf
-					<input type="text" class="text"  name="account" value="Username" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Username';}" >
-						<div class="key">
-					<input type="password" value="Password"  name="pass" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password';}">
-						</div>
+			<input type="text" class="text"  name="account" value="Username" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Username';}" >
+			<div class="key">
+				<input type="password" value="Password"  name="pass" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password';}">
+			</div>
 			
-	<div class="signin">
-		<input type="submit" value="Login" >
-		<br><br>
-		<a href="{{url('pass')}}">忘记密码</a>&nbsp;&nbsp;<a href="{{url('changepass')}}">修改密码</a><br>
-	<a href="{{url('reg')}}">注册</a>
-	</div>
-	</form>
+			<div class="signin">
+				<input type="submit" value="Login" >
+				<br><br>
+				<a href="{{url('pass')}}">忘记密码</a>&nbsp;&nbsp;<a href="{{url('changepass')}}">修改密码</a><br>
+				<a href="{{url('reg')}}">注册</a>
+			</div>
+		</form>
 </div>
  
 </body>
