@@ -69,15 +69,28 @@ class UserController extends Controller
 	//执行注册
 	public function store(Request $request)
 	{
-        $post=$request->except('_token');
-        if($post['pass'] !=$post['passs']){
-            echo "<script>alert('密码不一致');location.href='/reg';</script>";
-		}
-
-		$qqmail=$post['email'];
-		if(!preg_match('|^[1-9]\d{4,10}@qq\.com$|i',$qqmail)){
-			echo "<script>alert('邮箱格式不对');location.href='/reg';</script>";
-		}
+        request()->validate([
+            'name' => 'required|unique:shop_user',
+			'email'=>'required|email',
+			'mibble'=>'required|regex:/^1[345789][0-9]{9}$/',
+            'pass'=>'required|between:5,15',
+            'passs'=>'same:pass'
+        ],[ 
+            'name.required'=>'请输入用户名',
+            'name.unique'=>'用户名已存在',
+			'email.required'=>'邮箱不能位空',
+			'email.email'=>'邮箱格式不对',
+			'pass.required'=>'密码不能位空',
+			'mibble.required'=>'手机号不能为空',
+			'mibble.regex'=>'手机号格式不对',
+			'pass.between'=>'密码长短不够',
+            'passs.same'=>'密码不一致'
+        ]);
+		$post=$request->except('_token');
+		// $qqmail=$post['email'];
+		// if(!preg_match('|^[1-9]\d{4,10}@qq\.com$|i',$qqmail)){
+		// 	echo "<script>alert('邮箱格式不对');location.href='/reg';</script>";
+		// }
 
         $post['pass']=password_hash($post['pass'],PASSWORD_BCRYPT);
         unset($post['passs']);
