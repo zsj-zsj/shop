@@ -83,14 +83,10 @@ class UserController extends Controller
         $res=ShopModel::create($post);
         if($res){
 			$data=[
-				'url'=>"注册成功"            
+			    'user_name' => $post['name'],
+				'url' => "注册成功"
 			];
 			Mail::send('user.regemail',$data,function($message,$post){
-//				$post=request()->except('_token');
-//				$user=ShopModel::where('name','=',$post)
-//								->orwhere('email','=',$post)
-//								->orwhere('mibble','=',$post)
-//								->first();
 					$to = [
                         $post['email']
 					];
