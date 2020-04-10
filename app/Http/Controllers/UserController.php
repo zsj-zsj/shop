@@ -86,11 +86,11 @@ class UserController extends Controller
 				'url'=>"注册成功"            
 			];
 			Mail::send('user.regemail',$data,function($message,$post){
-				$post=request()->except('_token');
-				$user=ShopModel::where('name','=',$post)
-								->orwhere('email','=',$post)
-								->orwhere('mibble','=',$post)
-								->first();
+//				$post=request()->except('_token');
+//				$user=ShopModel::where('name','=',$post)
+//								->orwhere('email','=',$post)
+//								->orwhere('mibble','=',$post)
+//								->first();
 					$to = [
                         $post['email']
 					];
