@@ -39,7 +39,7 @@ class FindPass extends Controller
             ps::insertGetId($data);            
 
             $data=[
-                'url'=>env('APP_URL').'/newpass?token='.$token
+                'url'=>env('APP_URL').'newpass?token='.$token
             ];
             Mail::send('pass.email',$data,function($message){
                 $post=request()->except('_token');
@@ -88,7 +88,7 @@ class FindPass extends Controller
         $id=session('id');
         unset($post['pass2']);
         $res=ShopModel::where('id','=',$id)->update(['pass'=>$pass1]);
-        
+        $email=ShopModel::where('id','=',$id)->first();
         $a=ps::where('id','=',$id)->orderBy('p_id','desc')->first();
         if($a->status==1){
             echo "token无效";die;
@@ -96,12 +96,23 @@ class FindPass extends Controller
         if($a->expire < time() ){
             die("token过期");
         }
-
+        $data=[
+            'user_name' => $email['name'],
+            'time'=>date('Y-m-d H:i:s'),
+            'ip'=>$_SERVER['REMOTE_ADDR'],
+        ];
+        Mail::send('pass.newpassemail',$data,function($message) use($email){
+                $to = [
+                    $email['email']
+                ];
+                $message ->to($to)->subject('重置密码成功');
+        });  
         if($res){
             echo "修改成功！正在跳转至登录页面__________";
             $status=ps::where('id','=',$id)->update(['status'=>1]);
             header('refresh:2;url=/login');
-        }  
+        }
+        
     }
 }
 

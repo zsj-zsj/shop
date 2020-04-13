@@ -33,8 +33,8 @@ class UserController extends Controller
                 $data=[
                     'status'=>'登陆成功'
                 ];
-                Mail::send('user.loginsuccess',$data,function($message){
-					$account=request()->account;
+                Mail::send('user.loginsuccess',$data,function($message) use ($account){
+					//$account=request()->account;
 					$user=ShopModel::where(['name'=>$account])->orWhere(['mibble'=>$account])->orWhere(['email'=>$account])->first();
 					$to = [
 						$user['email']
@@ -74,23 +74,25 @@ class UserController extends Controller
 		echo $qqmail,' 请输入正确的邮箱格式';die;
 		}
         if($post['pass'] !=$post['passs']){
-            echo "<script>alert('密码不一致');location.href='/register';</script>";
-        }
+            echo "<script>alert('密码不一致');location.href='/reg';</script>";
+		}
+
+		$qqmail=$post['email'];
+		if(!preg_match('|^[1-9]\d{4,10}@qq\.com$|i',$qqmail)){
+			echo "<script>alert('邮箱格式不对');location.href='/reg';</script>";
+		}
+
         $post['pass']=password_hash($post['pass'],PASSWORD_BCRYPT);
         unset($post['passs']);
         $res=ShopModel::create($post);
         if($res){
 			$data=[
-				'url'=>"注册成功"            
+			    'user_name' => $post['name'],
+				'url' => "注册成功"
 			];
-			Mail::send('user.regemail',$data,function($message){
-				$post=request()->except('_token');
-				$user=ShopModel::where('name','=',$post)
-								->orwhere('email','=',$post)
-								->orwhere('mibble','=',$post)
-								->first();
+			Mail::send('user.regemail',$data,function($message) use($post){
 					$to = [
-						$user['email']
+                        $post['email']
 					];
 					$message ->to($to)->subject('注册成功');
 				});
@@ -124,6 +126,17 @@ class UserController extends Controller
 		$pass=ShopModel::where('name','=',$user)->update(['pass'=>$post['newpass']]);
 		if($pass){
 			echo "修改成功,请重新登录";
+			$data=[
+				'user_name' => $res['name'],
+				'time'=>date('Y-m-d H:i:s'),
+				'ip'=>$_SERVER['REMOTE_ADDR'],
+			];
+			Mail::send('pass.passemail',$data,function($message) use($res){
+					$to = [
+                        $res['email']
+					];
+					$message ->to($to)->subject('修改密码成功');
+			});
 			header('refresh:2;url=/login');
 		}
 
