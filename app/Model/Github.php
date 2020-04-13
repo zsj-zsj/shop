@@ -4,9 +4,9 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ShopModel extends Model
+class Github extends Model
 {
-    protected $table = 'shop_user';
-    protected  $primaryKey='id';
+    protected $table = 'shop_github';
+    protected  $primaryKey='g_id';
 	protected $guarded = [];
 }

@@ -34,9 +34,8 @@ Route::post('/doreg','UserController@store');
 Route::get('/changepass','UserController@changePass')->middleware('User');
 Route::post('/changepass','UserController@dochangePass');
 
-//个人中心
+//退出登录
 Route::prefix('user')->middleware('User')->group(function () {
-	Route::get('mycenter','UserController@mycenter');
 	Route::get('loginexit','UserController@loginexit');
 });
 
@@ -45,3 +44,4 @@ Route::post('/doFindpass','FindPass@doFindpass'); //执行发邮件
 Route::get('/newpass','FindPass@resPass');  //展示重置密码页面
 Route::post('/newpass','FindPass@doResPass');  //执行重置密码
 
+Route::get('/gitlogin','GithubLogin@gitlogin'); //github登录

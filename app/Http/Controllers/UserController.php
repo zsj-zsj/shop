@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\ShopModel;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Cookie; 
+use Illuminate\Support\Str; 
+use Illuminate\Support\Facades\Redis;
+
 class UserController extends Controller
 {
 
@@ -43,7 +47,12 @@ class UserController extends Controller
 					$message ->to($to)->subject('登陆成功');
             	});
 				session(['user'=>$res['name']]);
-    			echo "<script>alert('登陆成功');location.href='/user/mycenter';</script>";
+				$token=Str::random(16);
+				$key='token';
+				Redis::set($key,$token);
+				Redis::expire($key,3600);
+
+    			echo "<script>alert('登陆成功');location.href='http://shop.1906.com/';</script>";
                
     		}else{
     			echo "<script>alert('账号或密码错误');location.href='/login';</script>";
@@ -53,12 +62,6 @@ class UserController extends Controller
     	}	
     }
 
-
-	//个人中心
-	public function mycenter()
-	{
-      	return view('user.mycenter');
-	}
 	
 	//注册视图
 	public function register()
@@ -87,10 +90,6 @@ class UserController extends Controller
             'passs.same'=>'密码不一致'
         ]);
 		$post=$request->except('_token');
-		// $qqmail=$post['email'];
-		// if(!preg_match('|^[1-9]\d{4,10}@qq\.com$|i',$qqmail)){
-		// 	echo "<script>alert('邮箱格式不对');location.href='/reg';</script>";
-		// }
 
         $post['pass']=password_hash($post['pass'],PASSWORD_BCRYPT);
         unset($post['passs']);
@@ -155,7 +154,7 @@ class UserController extends Controller
 	}
 
 	//退出登录
-	function loginexit(){
+	public function loginexit(){
 		request()->session()->flush();  //清除session
 		if(!session('user')){
             echo "<script>alert('退出成功');location.href='/login';</script>";
