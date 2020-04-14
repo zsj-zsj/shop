@@ -39,16 +39,17 @@ class UserController extends Controller
                     'url'=>env('APP_URL')
                 ];
                 //使用闭包函数，传递参数
-                Mail::send('user.loginsuccess',$data,function($message) use ($account){ 	
-					$user=ShopModel::where(['name'=>$account])->orWhere(['mibble'=>$account])->orWhere(['email'=>$account])->first();
-					$to = [
-						$user['email']
-					];
-					$message ->to($to)->subject('登陆成功');
-            	});
-				session(['user'=>$res['name']]);
+                // Mail::send('user.loginsuccess',$data,function($message) use ($account){ 	
+				// 	$user=ShopModel::where(['name'=>$account])->orWhere(['mibble'=>$account])->orWhere(['email'=>$account])->first();
+				// 	$to = [
+				// 		$user['email']
+				// 	];
+				// 	$message ->to($to)->subject('登陆成功');
+            	// });
+
 				$token=Str::random(16);
-				$key='token';
+				setcookie('token',$token,time() + 3600,'/','.1906.com',NULL,true);
+				$key='str:user:token'.$res['id'];
 				Redis::set($key,$token);
 				Redis::expire($key,3600);
 

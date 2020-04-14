@@ -57,11 +57,15 @@ class GithubLogin extends Controller
             ];
             Github::create($gituser);
         }
-        session(['user'=>$id['git_name']]);
+
         $token=Str::random(16);
-        $key='token';
+        setcookie('token',$token,time() + 3600,'/','.1906.com',NULL,true);
+        $user_id=ShopModel::where('id','=',$id['id'])->first();
+        $key='str:user:token'.$user_id['id'];
         Redis::set($key,$token);
         Redis::expire($key,3600);
-        return redirect('http://shop.1906.com/?token='.$token);
+        
+        header("refresh:0,url='http://shop.1906.com/'");
+        echo "登录成功，正在跳转____";
     }
 }
