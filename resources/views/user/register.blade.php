@@ -386,11 +386,11 @@
 							<b style="color:red"> @php echo $errors->first('email'); @endphp </b>
 						</div>
 						<div class="input-field">
-							<input type="text" placeholder="请输入密码" name="pass" class="validate" >
+							<input type="password" placeholder="请输入密码" name="pass" class="validate" >
 							<b style="color:red"> @php echo $errors->first('pass'); @endphp </b>
 						</div>
 						<div class="input-field">
-							<input type="text" placeholder="确认密码" name="passs" class="validate">
+							<input type="password" placeholder="确认密码" name="passs" class="validate">
 							<b style="color:red"> @php echo $errors->first('passs'); @endphp </b>
 						</div>
 						<input type="submit" class="btn button-default" value="注册" > <br>

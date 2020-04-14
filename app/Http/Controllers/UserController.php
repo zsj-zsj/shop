@@ -23,9 +23,8 @@ class UserController extends Controller
     //登陆的执行
 	public function login_do()
 	{
-    	$account=request()->account;
+		$account=request()->except('_token');		
     	$pass=request()->pass;	
-		//$pass=password_hash("123456",PASSWORD_DEFAULT);   哈希加密的方法
 		$res=ShopModel::where(['name'=>$account])->orWhere(['mibble'=>$account])->orWhere(['email'=>$account])->first();
     	if($res){
     		$result=password_verify($pass,$res['pass']);
