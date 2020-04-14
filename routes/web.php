@@ -31,13 +31,11 @@ Route::get('/reg','UserController@register');
 Route::post('/doreg','UserController@store');
 
 //修改密码
-Route::get('/changepass','UserController@changePass')->middleware('User');
+Route::get('/changepass','UserController@changePass');
 Route::post('/changepass','UserController@dochangePass');
 
 //退出登录
-Route::prefix('user')->middleware('User')->group(function () {
-	Route::get('loginexit','UserController@loginexit');
-});
+Route::get('loginexit','UserController@loginexit');
 
 Route::get('pass','FindPass@findpass');  //展示找回页面
 Route::post('/doFindpass','FindPass@doFindpass'); //执行发邮件

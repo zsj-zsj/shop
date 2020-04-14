@@ -39,13 +39,13 @@ class UserController extends Controller
                     'url'=>env('APP_URL')
                 ];
                 //使用闭包函数，传递参数
-                // Mail::send('user.loginsuccess',$data,function($message) use ($account){ 	
-				// 	$user=ShopModel::where(['name'=>$account])->orWhere(['mibble'=>$account])->orWhere(['email'=>$account])->first();
-				// 	$to = [
-				// 		$user['email']
-				// 	];
-				// 	$message ->to($to)->subject('登陆成功');
-            	// });
+                Mail::send('user.loginsuccess',$data,function($message) use ($account){ 	
+					$user=ShopModel::where(['name'=>$account])->orWhere(['mibble'=>$account])->orWhere(['email'=>$account])->first();
+					$to = [
+						$user['email']
+					];
+					$message ->to($to)->subject('登陆成功');
+            	});
 
 				$token=Str::random(16);
 				setcookie('token',$token,time() + 3600,'/','.1906.com',NULL,true);
@@ -156,10 +156,8 @@ class UserController extends Controller
 
 	//退出登录
 	public function loginexit(){
-		request()->session()->flush();  //清除session
-		if(!session('user')){
-            echo "<script>alert('退出成功');location.href='/login';</script>";
-        }
+		$cookie = Cookie::forget('name');
+        echo "<script>alert('退出成功');location.href='/login';</script>";
 	}
 
 
