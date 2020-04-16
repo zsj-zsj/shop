@@ -45,9 +45,9 @@ class UserController extends Controller
 				// 	];
 				// 	$message ->to($to)->subject('登陆成功');
             	// });
-				setcookie('uid',$res['id'],time() + 3600,'/','.1906.com',NULL,true);
+				setcookie('uid',$res['id'],time() + 3600,'/',env('COM'),NULL,true);
 				$token=Str::random(16);
-				setcookie('token',$token,time() + 3600,'/','.1906.com',NULL,true);
+				setcookie('token',$token,time() + 3600,'/',env('COM'),NULL,true);
 				$key='str:user:token'.$res['id'];
 				Redis::set($key,$token);
 				Redis::expire($key,3600);
@@ -155,8 +155,8 @@ class UserController extends Controller
 
 	//退出登录
 	public function loginexit(){
-		setcookie("token", "", time() - 3600, "/", ".1906.com");
-		setcookie("uid", "", time() - 3600, "/", ".1906.com");
+		setcookie("token", "", time() - 3600, "/", env('COM'));
+		setcookie("uid", "", time() - 3600, "/", env('COM'));
         header('refresh:0;url=/login');
 	}
 

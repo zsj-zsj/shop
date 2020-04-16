@@ -28,7 +28,7 @@
 	<div class="navbar-top">
 		<!-- site brand	 -->
 		<div class="site-brand">
-			<a href="index.html"><h1>Mstore</h1></a>
+			<a href="{{env('SHOP')}}"><h1>商城</h1></a>
 		</div>
 	</div>
 	<!-- end navbar top -->

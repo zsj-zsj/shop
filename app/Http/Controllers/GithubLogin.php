@@ -59,9 +59,9 @@ class GithubLogin extends Controller
         }
 
         $token=Str::random(16);
-        setcookie('token',$token,time() + 3600,'/','.1906.com',NULL,true);
+        setcookie('token',$token,time() + 3600,'/',env('COM'),NULL,true);
         $user_id=ShopModel::where('id','=',$id['id'])->first();
-        setcookie('uid',$user_id['id'],time() + 3600,'/','.1906.com',NULL,true);
+        setcookie('uid',$user_id['id'],time() + 3600,'/',env('COM'),NULL,true);
         $key='str:user:token'.$user_id['id'];
         Redis::set($key,$token);
         Redis::expire($key,3600);
