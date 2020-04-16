@@ -48,10 +48,10 @@ class GithubLogin extends Controller
             $data=[
                 'name'=>$user['login']
             ];
-            $git=ShopModel::insertGetId($data);
+            $gitid=ShopModel::insertGetId($data);
             //把user id 入到git 表
             $gituser=[
-                'id'=>$git,
+                'id'=>$gitid,
                 'git_id'=>$user['id'],
                 'git_name'=>$user['login']
             ];
@@ -60,14 +60,12 @@ class GithubLogin extends Controller
 
         $token=Str::random(16);
         setcookie('token',$token,time() + 3600,'/',env('COM'),NULL,true);
-        $user_id=ShopModel::where('id','=',$id['id'])->first();
-        setcookie('uid',$user_id['id'],time() + 3600,'/',env('COM'),NULL,true);
-        $key='str:user:token'.$user_id['id'];
+        setcookie('uid',$gitid,time() + 3600,'/',env('COM'),NULL,true);
+        $key='str:user:token'.$gitid;
         Redis::set($key,$token);
         Redis::expire($key,3600);
         
         $uri=env('SHOP');
         header("refresh:0,url='$uri'");
-        echo "登录成功，正在跳转____";
     }
 }
