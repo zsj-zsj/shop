@@ -61,11 +61,13 @@ class GithubLogin extends Controller
         $token=Str::random(16);
         setcookie('token',$token,time() + 3600,'/','.1906.com',NULL,true);
         $user_id=ShopModel::where('id','=',$id['id'])->first();
+        setcookie('uid',$user_id['id'],time() + 3600,'/','.1906.com',NULL,true);
         $key='str:user:token'.$user_id['id'];
         Redis::set($key,$token);
         Redis::expire($key,3600);
         
-        header("refresh:0,url='http://shop.1906.com/'");
+        $uri=env('SHOP');
+        header("refresh:0,url='$uri'");
         echo "登录成功，正在跳转____";
     }
 }

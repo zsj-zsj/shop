@@ -31,8 +31,8 @@ Route::get('/reg','UserController@register');
 Route::post('/doreg','UserController@store');
 
 //修改密码
-Route::get('/changepass','UserController@changePass');
-Route::post('/changepass','UserController@dochangePass');
+Route::get('/changepass','UserController@changePass')->middleware('User');
+Route::post('/changepass','UserController@dochangePass')->middleware('User');
 
 //退出登录
 Route::get('loginexit','UserController@loginexit');
@@ -43,3 +43,9 @@ Route::get('/newpass','FindPass@resPass');  //展示重置密码页面
 Route::post('/newpass','FindPass@doResPass');  //执行重置密码
 
 Route::get('/gitlogin','GithubLogin@gitlogin'); //github登录
+
+//接口
+Route::prefix('/api')->group(function(){
+    Route::post('reg','ApiController@apiReg'); 
+    Route::post('login','ApiController@apiLogin');
+});

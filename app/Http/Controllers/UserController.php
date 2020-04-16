@@ -38,21 +38,21 @@ class UserController extends Controller
                     'url'=>env('APP_URL')
                 ];
                 //使用闭包函数，传递参数
-                Mail::send('user.loginsuccess',$data,function($message) use ($account){ 	
-					$user=ShopModel::where(['name'=>$account])->orWhere(['mibble'=>$account])->orWhere(['email'=>$account])->first();
-					$to = [
-						$user['email']
-					];
-					$message ->to($to)->subject('登陆成功');
-            	});
-
+                // Mail::send('user.loginsuccess',$data,function($message) use ($account){ 	
+				// 	$user=ShopModel::where(['name'=>$account])->orWhere(['mibble'=>$account])->orWhere(['email'=>$account])->first();
+				// 	$to = [
+				// 		$user['email']
+				// 	];
+				// 	$message ->to($to)->subject('登陆成功');
+            	// });
+				setcookie('uid',$res['id'],time() + 3600,'/','.1906.com',NULL,true);
 				$token=Str::random(16);
 				setcookie('token',$token,time() + 3600,'/','.1906.com',NULL,true);
 				$key='str:user:token'.$res['id'];
 				Redis::set($key,$token);
 				Redis::expire($key,3600);
-
-    			echo "<script>alert('登陆成功');location.href='http://shop.1906.com/';</script>";
+				$uri=env('SHOP');
+    			echo "<script>alert('登陆成功');location.href='$uri';</script>";
                
     		}else{
     			echo "<script>alert('账号或密码错误');location.href='/login';</script>";
@@ -155,8 +155,9 @@ class UserController extends Controller
 
 	//退出登录
 	public function loginexit(){
-		$cookie = Cookie::forget('name');
-        echo "<script>alert('退出成功');location.href='/login';</script>";
+		setcookie("token", "", time() - 3600, "/", ".1906.com");
+		setcookie("uid", "", time() - 3600, "/", ".1906.com");
+        header('refresh:0;url=/login');
 	}
 
 
