@@ -361,7 +361,7 @@
 						</div>
 						<input type="submit" value="登录" lass="btn button-default" >
 						<a href="{{url('pass')}}">忘记密码</a>&nbsp;&nbsp;<a href="{{url('reg')}}">注册</a> <br>
-						<a href="https://github.com/login/oauth/authorize?client_id=706c52b825b30aa9e450&redirect_uri=http://passport.1906.com/gitlogin/">Github登录</a>
+						<a href="https://github.com/login/oauth/authorize?client_id={{env('client_id')}}&redirect_uri={{env('PASSPORT')}}">Github登录</a>
 					</form>
 			</div>
 		</div>
