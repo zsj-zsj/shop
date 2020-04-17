@@ -17,13 +17,17 @@ class User
     public function handle($request, Closure $next)
     {
         $cookie=$_COOKIE;
-        $key='str:user:token'.isset($cookie['uid']);
+        $uid=isset($cookie['uid']) ? $cookie['uid'] : NULL;
+        $cotoken=isset($cookie['token']) ? $cookie['token'] : NULL;
+
+        $key='str:user:token'.$uid;
         $token=Redis::get($key);
-        if($token != isset($cookie['token'])){
-            echo "<script>alert('token无效');location.href='/login';</script>";
+        $uri=env('PASSPORT').'/login';
+        if($token != $cotoken){
+            echo "<script>alert('token不对');location.href='$uri';</script>";
         }
         if(!isset($cookie['token'])){
-            echo "<script>alert('请登录');location.href='/login';</script>";
+            echo "<script>alert('请先登录');location.href='$uri';</script>";
         }
 
         return $next($request);
